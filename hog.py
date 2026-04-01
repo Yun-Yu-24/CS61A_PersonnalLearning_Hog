@@ -48,6 +48,15 @@ def boar_brawl(player_score, opponent_score):
     """
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    gap = (player_score % 10) - (opponent_score // 10) % 10
+    if gap != 0:
+        if gap > 0:
+            gap = gap * 3
+        else:
+            gap = (-gap) * 3
+    else:
+        gap = 1
+    return gap
     # END PROBLEM 2
 
 
