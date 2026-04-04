@@ -183,10 +183,10 @@ def play(strategy0, strategy1, update, score0=0, score1=0, dice=six_sided, goal=
     who = 0
     while score0 < goal and score1 < goal:
         if who == 0:
-            score0 = update(strategy0, score0, score1)
+            score0 = update(strategy0(score0, score1), score0, score1, dice)
             who = 1
         else:
-            score1 = update(strategy1, score0, score1)
+            score1 = update(strategy1(score1, score0), score1, score0, dice)
             who = 0
     # END PROBLEM 5
     return score0, score1
@@ -279,6 +279,14 @@ def make_averaged(original_function, times_called=1000):
 
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    def avg(*args):
+        sum = 0
+        for i in range(times_called):
+            sum += original_function(*args)
+        sum = sum / times_called
+        return sum
+    return avg
+
     # END PROBLEM 8
 
 
@@ -292,6 +300,17 @@ def max_scoring_num_rolls(dice=six_sided, times_called=1000):
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+    maxnumber = 0
+    currentnumber = 0
+    maxId = 0
+    for i in range(10):
+        score = make_averaged(roll_dice, times_called)
+        currentnumber = score(i + 1, dice)
+        if currentnumber > maxnumber:
+            maxnumber = currentnumber
+            maxId = i + 1
+    return maxId
+
     # END PROBLEM 9
 
 
